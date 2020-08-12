@@ -1,6 +1,7 @@
 from app import app, db
+from app.utils import Serializer
 
-class Task(db.Model):
+class Task(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
     done = db.Column(db.Boolean, default=False)

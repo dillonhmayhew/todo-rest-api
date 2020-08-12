@@ -1,0 +1,13 @@
+# ignore all log files
+*.log
+
+# ignore virtual environment
+flask/
+
+# ignore
+__pycache__/
+*.pyc
+*~
+
+.idea/
+.vscode

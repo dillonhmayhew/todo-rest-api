@@ -32,5 +32,33 @@ def create_task():
 
     return jsonify(task=task.serialize()), 201
 
-# @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
-# def update_task(task_id):
+
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = Task.query.get(task_id)
+    if task is None:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'title' in request.json and type(request.json['title']) is not unicode:
+        abort(400)
+    if 'description' in request.json and type(request.json['description']) is not unicode:
+        abort(400)
+    if 'done' in request.json and type(request.json['done']) is not bool:
+        abort(400)
+    task.title = request.json.get('title', task.title)
+    task.description = request.json.get('description', task.description)
+    task.done = request.json.get('done', task.done)
+
+    return jsonify(task=task.serialize())
+
+
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    task = Task.query.get(task_id)
+    if task is None:
+        abort(404)
+    db.session.delete(task)
+    db.session.commit()
+
+    return jsonify(result=True)

@@ -1,10 +1,10 @@
 from flask import make_response, jsonify
-from app import app
+from app.errors import bp
 
-@app.errorhandler(404)
+@bp.app_errorhandler(404)
 def not_found(error):
-    return make_response(jsonify(error='Not found'), 404)
+    return make_response(jsonify(error='Not Found'), 404)
 
-@app.errorhandler(400)
+@bp.app_errorhandler(400)
 def bad_request(error):
     return make_response(jsonify(error='Bad Request'), 400)

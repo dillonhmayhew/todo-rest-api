@@ -1,5 +1,5 @@
-from app import app, db
-from app.utils import Serializer
+from app import db
+from app.utils.serializer import Serializer
 
 class Task(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True)

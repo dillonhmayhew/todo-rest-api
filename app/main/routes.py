@@ -1,4 +1,4 @@
-from app import db
+from app import db, auth_
 from flask import jsonify, abort, request
 from app.models import Task
 from app.utils.helpers import make_public_task
@@ -6,8 +6,10 @@ from app.main import bp
 
 
 @bp.route('/todo/api/v1.0/tasks', methods=['GET'])
+@auth_.login_required
 def get_tasks():
-    tasks = Task.serialize_list(Task.query.all())
+    user = auth_.current_user()
+    tasks = Task.serialize_list(user.tasks.all())
 
     return jsonify(tasks=[make_public_task(task) for task in tasks])
 

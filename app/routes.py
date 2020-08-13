@@ -1,13 +1,14 @@
 from app import app, db
 from flask import jsonify, abort, request
 from app.models import Task
+from app.utils import make_public_task
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     tasks = Task.serialize_list(Task.query.all())
 
-    return jsonify(tasks=tasks)
+    return jsonify(tasks=[make_public_task(task) for task in tasks])
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['GET'])
@@ -16,7 +17,7 @@ def get_task(task_id):
     if task is None:
         abort(404)
     
-    return jsonify(task=task.serialize())
+    return jsonify(task=make_public_task(task.serialize()))
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
@@ -30,7 +31,7 @@ def create_task():
     db.session.add(task)
     db.session.commit()
 
-    return jsonify(task=task.serialize()), 201
+    return jsonify(task=make_public_task(task.serialize())), 201
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
@@ -40,9 +41,9 @@ def update_task(task_id):
         abort(404)
     if not request.json:
         abort(400)
-    if 'title' in request.json and type(request.json['title']) is not unicode:
+    if 'title' in request.json and type(request.json['title']) is not str:
         abort(400)
-    if 'description' in request.json and type(request.json['description']) is not unicode:
+    if 'description' in request.json and type(request.json['description']) is not str:
         abort(400)
     if 'done' in request.json and type(request.json['done']) is not bool:
         abort(400)
@@ -50,7 +51,7 @@ def update_task(task_id):
     task.description = request.json.get('description', task.description)
     task.done = request.json.get('done', task.done)
 
-    return jsonify(task=task.serialize())
+    return jsonify(task=make_public_task(task.serialize()))
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
@@ -58,6 +59,7 @@ def delete_task(task_id):
     task = Task.query.get(task_id)
     if task is None:
         abort(404)
+
     db.session.delete(task)
     db.session.commit()
 

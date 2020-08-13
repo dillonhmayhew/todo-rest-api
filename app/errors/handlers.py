@@ -12,3 +12,7 @@ def bad_request(error):
 @bp.app_errorhandler(405)
 def method_not_allowed(error):
     return make_response(jsonify(error='Method Not Allowed'), 405)
+
+@bp.app_errorhandler(401)
+def unauthorized_access(error):
+    return make_response(jsonify(error='Unauthorized Access')), 401

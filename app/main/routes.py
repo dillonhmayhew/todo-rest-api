@@ -15,10 +15,13 @@ def get_tasks():
 
 
 @bp.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['GET'])
+@auth_.login_required
 def get_task(task_id):
     task = Task.query.get(task_id)
     if task is None:
         abort(404)
+    if task.author != auth_.current_user():
+        abort(401)
     
     return jsonify(task=make_public_task(task.serialize()))
 

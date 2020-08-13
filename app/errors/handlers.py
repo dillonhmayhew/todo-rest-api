@@ -8,3 +8,7 @@ def not_found(error):
 @bp.app_errorhandler(400)
 def bad_request(error):
     return make_response(jsonify(error='Bad Request'), 400)
+
+@bp.app_errorhandler(405)
+def method_not_allowed(error):
+    return make_response(jsonify(error='Method Not Allowed'), 405)

@@ -1,6 +1,9 @@
 from app import db
+from flask import current_app
 from app.utils.serializer import Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
+import time
 
 
 class User(db.Model, Serializer):
@@ -20,6 +23,20 @@ class User(db.Model, Serializer):
         if self.password_hash is None:
             return False
         return check_password_hash(self.password_hash, password)
+
+    def generate_auth_token(self, expires_in=600):
+        return jwt.encode(
+            {'id': self.id, 'exp': time.time() + expires_in},
+            current_app.config['SECRET_KEY'], algorithm='HS256')
+
+    @staticmethod
+    def verify_auth_token(token):
+        try:
+            data = jwt.decode(token, current_app.config['SECRET_KEY'],
+                              algorithms=['HS256'])
+        except:
+            return
+        return User.query.get(data['id'])
 
 
 class Task(db.Model, Serializer):

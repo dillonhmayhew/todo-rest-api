@@ -1,11 +1,11 @@
 from app import db, auth_
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from app.models import User, Task
 from app.utils.helpers import make_public_task, make_public_user
 from app.main import bp
 
 
-@bp.route('/todo/api/v1.0/users', methods=['GET'])
+@bp.route('/todo/api/users', methods=['GET'])
 @auth_.login_required
 def get_users():
     users = User.serialize_list(User.query.all())
@@ -13,7 +13,7 @@ def get_users():
     return jsonify(users=[make_public_user(user) for user in users])
 
 
-@bp.route('/todo/api/v1.0/users/<username>', methods=['GET'])
+@bp.route('/todo/api/users/<username>', methods=['GET'])
 @auth_.login_required
 def get_user(username):
     user = User.query.filter_by(username=username).first()
@@ -23,16 +23,19 @@ def get_user(username):
     return jsonify(user=make_public_user(user.serialize()))
 
 
-@bp.route('/todo/api/v1.0/users', methods=['POST'])
+@bp.route('/todo/api/users', methods=['POST'])
 def create_user():
     if not request.json:
         abort(400)
-    if not 'username' in request.json or not 'email' in request.json or not 'passwd' in request.json:
-        return make_response(jsonify(error='You must include a username, email and passwd to create a user.'), 400)
+    username = request.json.get('username')
+    email = request.json.get('email')
+    passwd = request.json.get('passwd')
+    if username is None or email is None or passwd is None:
+        abort(400)   # missing arguments
     
-    user = User(username=request.json['username'],
-                email=request.json['email'])
-    user.set_password(request.json['passwd'])
+    user = User(username=username,
+                email=email)
+    user.set_password(passwd)
     
     db.session.add(user)
     db.session.commit()
@@ -40,7 +43,7 @@ def create_user():
     return jsonify(user=make_public_user(user.serialize())), 201
 
 
-@bp.route('/todo/api/v1.0/users/<username>', methods=['PUT'])
+@bp.route('/todo/api/users/<username>', methods=['PUT'])
 @auth_.login_required
 def update_user(username):
     user = User.query.filter_by(username=username).first()
@@ -69,7 +72,7 @@ def update_user(username):
     return jsonify(user=make_public_user(user.serialize()))
 
 
-@bp.route('/todo/api/v1.0/users/<username>', methods=['DELETE'])
+@bp.route('/todo/api/users/<username>', methods=['DELETE'])
 @auth_.login_required
 def delete_user(username):
     user = User.query.filter_by(username=username).first()
@@ -84,7 +87,7 @@ def delete_user(username):
     return jsonify(result=True)
 
 
-@bp.route('/todo/api/v1.0/tasks', methods=['GET'])
+@bp.route('/todo/api/tasks', methods=['GET'])
 @auth_.login_required
 def get_tasks():
     user = auth_.current_user()
@@ -93,7 +96,7 @@ def get_tasks():
     return jsonify(tasks=[make_public_task(task) for task in tasks])
 
 
-@bp.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
+@bp.route('/todo/api/tasks/<int:task_id>', methods=['GET'])
 @auth_.login_required
 def get_task(task_id):
     task = Task.query.get(task_id)
@@ -105,7 +108,7 @@ def get_task(task_id):
     return jsonify(task=make_public_task(task.serialize()))
 
 
-@bp.route('/todo/api/v1.0/tasks', methods=['POST'])
+@bp.route('/todo/api/tasks', methods=['POST'])
 @auth_.login_required
 def create_task():
     if not request.json or not 'title' in request.json:
@@ -121,7 +124,7 @@ def create_task():
     return jsonify(task=make_public_task(task.serialize())), 201
 
 
-@bp.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
+@bp.route('/todo/api/tasks/<int:task_id>', methods=['PUT'])
 @auth_.login_required
 def update_task(task_id):
     task = Task.query.get(task_id)
@@ -148,7 +151,7 @@ def update_task(task_id):
     return jsonify(task=make_public_task(task.serialize()))
 
 
-@bp.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
+@bp.route('/todo/api/tasks/<int:task_id>', methods=['DELETE'])
 @auth_.login_required
 def delete_task(task_id):
     task = Task.query.get(task_id)

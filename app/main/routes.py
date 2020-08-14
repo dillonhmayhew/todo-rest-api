@@ -37,9 +37,12 @@ def create_user():
     username = request.json.get('username')
     email = request.json.get('email')
     passwd = request.json.get('passwd')
+
     if username is None or email is None or passwd is None:
         abort(400)   # missing arguments
-    
+    if User.query.filter_by(username=username).first() is not None:
+        abort(400)    # existing user
+
     user = User(username=username,
                 email=email)
     user.set_password(passwd)

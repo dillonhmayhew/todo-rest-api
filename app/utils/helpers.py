@@ -1,6 +1,23 @@
 from flask import url_for
 
 
+
+def make_public_user(user):
+    new_user = {}
+
+    for field in user:
+        if field == 'password_hash':
+            continue
+        if field == 'tasks':
+            continue
+        if field == 'id':
+            new_user['uri'] = url_for('main.get_user', username=user['username'], _external=True)
+        else:
+            new_user[field] = user[field]
+
+    return new_user
+
+
 def make_public_task(task):
     new_task = {}
 

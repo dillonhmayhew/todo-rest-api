@@ -1,5 +1,4 @@
-from app import db, auth_
-from app.auth import bp
+from app import auth_
 from app.models import User
 from flask import make_response, jsonify
 

@@ -1,5 +1,5 @@
 from flask import url_for
-
+from app.models import User
 
 
 def make_public_user(user):
@@ -11,6 +11,8 @@ def make_public_user(user):
         if field == 'tasks':
             continue
         if field == 'id':
+            user_tasks = User.query.get(user['id']).tasks.all()
+            new_user['tasks'] = len(user_tasks)
             new_user['uri'] = url_for('main.get_user', username=user['username'], _external=True)
         else:
             new_user[field] = user[field]

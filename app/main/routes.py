@@ -102,7 +102,11 @@ def delete_user(username):
 @auth_.login_required
 def get_tasks():
     user = g.user
-    tasks = Task.serialize_list(user.tasks.all())
+    done = request.args.get('done')
+    if done:
+        tasks = Task.serialize_list(user.tasks.filter_by(done=done))
+    else:
+        tasks = Task.serialize_list(user.tasks.all())
 
     return jsonify(tasks=[make_public_task(task) for task in tasks])
 

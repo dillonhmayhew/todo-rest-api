@@ -2,7 +2,8 @@
 
 This is a simple RESTful CRUD todo API built using Flask and SQLAlchemy. This is an almagamtion of various ideas from multiple sources and tutorials. The client can create a user profile and assign themselves tasks. All user and task data is stored in an SQLite database file named `app.db`. Users may clone this repository and use a local instance of this database for testing and playing around with.
 
-Keep scrolling for Installation instructions and detailed examples!
+[Installation](https://github.com/dillonhmayhew/todo-rest-api#installation)
+[Detailed Examples](https://github.com/dillonhmayhew/todo-rest-api#play-time)
 
 ## Resources
 

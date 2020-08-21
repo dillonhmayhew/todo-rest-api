@@ -58,7 +58,7 @@ The `user_id` field is a *foreign key* that links the task to its owner. I have 
 
 ## Authorizaton
 
-To secure this RESTful web service, I decided to use [Miguel Grinberg](https://blog.miguelgrinberg.com)'s Flask extension [Flask-HTTPAuth](https://github.com/miguelgrinberg/flask-httpauth). This limits accessibility to only reigestered users of the web service.
+To secure this RESTful web service, I decided to use [Miguel Grinberg](https://blog.miguelgrinberg.com)'s Flask extension [Flask-HTTPAuth](https://github.com/miguelgrinberg/flask-httpauth). This limits accessibility to only registered users of the web service.
 
 To add another layer of security, registered users have the option to generate a temporary authorization token by accessing the route `/api/token` with their login credentials. This token is generated using [PyJWT](https://github.com/jpadilla/pyjwt) and has a set expiry timeout. This prevents the need for a user to send their password over HTTP on every request and instead send a token that will be useless after it expires.
 
@@ -73,7 +73,7 @@ This code is using Python [3.7.3](https://www.python.org/downloads/release/pytho
 
 `>git clone https://github.com/dillonhmayhew/todo-rest-api.git`
 
-<**Use Python 3's built in virtual environment package:** `python3 -m [module-name] [name of virtual environment]`
+**Use Python 3's built in virtual environment package:** `python3 -m [module-name] [name of virtual environment]`
 
 `>python3 -m venv flask`
 

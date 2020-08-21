@@ -460,7 +460,7 @@ Date: Fri, 21 Aug 2020 20:16:00 GMT
 }
 ```
 
-This token `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTk4MDQxNTYwLjY4MjI5MTd9.4PyCU2usxfP5O7dq7Dh5Pcj1Ix9w9fOv9J_N9amIXtA` may now be used instead of a username and password:
+This token may now be used instead of a username and password:
 
 ```bat
 $ curl -u eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTk4MDQxNTYwLjY4MjI5MTd9.4PyCU2usxfP5O7dq7Dh5Pcj1Ix9w9fOv9J_N9amIXtA:irrelevant -i http://127.0.0.1:5000/api/tasks

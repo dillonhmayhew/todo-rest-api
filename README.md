@@ -93,7 +93,7 @@ On **Windows:**
 
 `>flask\Scripts\activate`
 
-**Install the reuqirements of the application:**
+**Install the requirements of the application:**
 
 `(flask) >pip install -r requirements.txt`
 

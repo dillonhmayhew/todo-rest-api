@@ -109,6 +109,8 @@ Since web browsers cannot easily generate all types of HTTP requests, I will be 
 
 ### Creating a User
 
+Let's create a user with the username `name`, email `name@example.com` and password `passwd`: 
+
 ```bat
 $ curl -i -H "Content-Type: application/json" -X POST -d '{"username":"name", "email":"name@example.com", "passwd":"passwd"}' http://127.0.0.1:5000/api/users
 HTTP/1.0 201 CREATED

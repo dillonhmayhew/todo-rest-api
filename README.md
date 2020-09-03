@@ -1,3 +1,9 @@
+# React.js front-end UI
+
+[Click](https://github.com/dillonhmayhew/react-flask-rest) here to see the front-end I built using [React.js](https://reactjs.org/)!
+
+![Home](https://github.com/dillonhmayhew/react-flask-rest/blob/master/home.gif)
+
 # todo-rest-api
 
 This is a simple RESTful CRUD todo API built using Flask and SQLAlchemy. This is an almagamtion of various ideas from multiple sources and tutorials. The client can create a user profile and assign themselves tasks. All user and task data is stored in an SQLite database file named `app.db`. Users may clone this repository and use a local instance of this database for testing and playing around with.

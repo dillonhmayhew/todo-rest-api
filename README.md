@@ -2,7 +2,7 @@
 
 [Click](https://github.com/dillonhmayhew/react-flask-rest) here to see the front-end I built using [React.js](https://reactjs.org/)!
 
-![Home](https://github.com/dillonhmayhew/react-flask-rest/blob/master/home.gif)
+![Home](https://github.com/dillonhmayhew/todo-rest-api/blob/master/home.gif)
 
 # todo-rest-api
 

@@ -1,6 +1,6 @@
 # React.js front-end UI
 
-[Click](https://github.com/dillonhmayhew/react-flask-rest) here to see the front-end I built using [React.js](https://reactjs.org/)!
+[Click here](https://github.com/dillonhmayhew/react-flask-rest) to see the front-end I built using [React.js](https://reactjs.org/)!
 
 ![Home](https://github.com/dillonhmayhew/todo-rest-api/blob/master/home.gif)
 
